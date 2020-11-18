@@ -27,7 +27,7 @@
 
 #include "builder/submap.h"
 #include "common/simple_thread_pool.h"
-#include "registrators/icp_fast.h"
+#include "registrators/icp_pointmatcher.h"
 #include "tbb/task_group.h"
 
 namespace static_map {
@@ -258,7 +258,7 @@ bool LoopDetector<PointT>::CloseLoop(const int target_id, const int source_id,
   }
 
   // TODO(edward) Load the config for submap matching.
-  registrator::IcpFast<PointT> scan_matcher;
+  registrator::IcpUsingPointMatcher<PointT> scan_matcher;
   scan_matcher.SetInputSource(all_frames_[source_id]->Cloud());
   scan_matcher.SetInputTarget(all_frames_[target_id]->Cloud());
   scan_matcher.Align(init_guess, *result);
